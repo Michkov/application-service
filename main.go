@@ -116,6 +116,12 @@ func main() {
 		devfileRegistryURL = devfile.DevfileRegistryEndpoint
 	}
 
+	// Retrieve the option to enable Pipelines as Code
+	pacEnabled := os.Getenv(gitops.PacEnabledEnvVar)
+	if pacEnabled == "1" {
+		gitops.EnablePAC()
+	}
+
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: ghToken})
 	tc := oauth2.NewClient(ctx, ts)
